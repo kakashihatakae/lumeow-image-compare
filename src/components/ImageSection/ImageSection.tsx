@@ -16,7 +16,6 @@ const getModelTitle = (model: string) => {
 };
 
 const ImageSection = ({ images, loading }: ImageSectionProps) => {
-  console.log(images[0].model);
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
       {loading ? (
