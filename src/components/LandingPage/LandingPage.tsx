@@ -56,7 +56,6 @@ const LandingPage = () => {
                   height={500}
                   className="w-full h-auto"
                 />
-                <p className="text-sm mt-2">LumeosAI Application Interface</p>
               </div>
             </div>
           </div>
