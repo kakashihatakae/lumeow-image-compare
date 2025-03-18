@@ -21,13 +21,13 @@ const LandingPage = () => {
           <Button
             onClick={() => {
               if (isSignedIn) {
-                router.push("/dashboard");
+                router.push("/");
               } else {
-                router.push("/sign-in");
+                router.push("/signin");
               }
             }}
           >
-            {isSignedIn ? "dashboard" : "Sign In"}
+            {isSignedIn ? "Dashboard" : "Sign In"}
           </Button>
         </div>
       </nav>

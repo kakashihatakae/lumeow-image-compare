@@ -6,11 +6,11 @@ import { Button } from "@src/components/ui/button";
 import { Textarea } from "@src/components/ui/textarea";
 import { Checkbox } from "@src/components/ui/checkbox";
 import { MODELS } from "@src/lib/contstants";
-import type { SelectedModelsType } from "@src/lib/types";
+import type { APIOutputType, SelectedModelsType } from "@src/lib/types";
 import ImageSection from "../ImageSection/ImageSection";
 
 export default function Dashboard() {
-  const [images, setImages] = useState<string[]>([]);
+  const [images, setImages] = useState<APIOutputType[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [prompt, setPrompt] = useState("");
   const [selectedModels, setSelectedModels] = useState<SelectedModelsType>({
@@ -50,44 +50,47 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <>
       <nav className="w-full px-4 py-4 bg-white border-b">
         <div className="w-[80%] container mx-auto flex justify-between items-center">
           <h1 className="text-2xl font-bold">
             Lumeos<span className="text-blue-400">AI</span>
           </h1>
-          <UserButton afterSignOutUrl="/" />
+          <UserButton />
         </div>
       </nav>
+      <div className="min-h-screen bg-gray-50 flex w-full">
+        <main className="flex justify-center w-full px-4 py-8">
+          <div className="space-y-6 w-[80%]">
+            <Textarea
+              placeholder="Enter your prompt here"
+              value={prompt}
+              onChange={(e) => setPrompt(e.target.value)}
+            />
 
-      <main className="flex justify-center container mx-auto px-4 py-8">
-        <div className="space-y-6 w-[80%]">
-          <Textarea
-            placeholder="Enter your prompt here"
-            value={prompt}
-            onChange={(e) => setPrompt(e.target.value)}
-          />
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {(Object.keys(MODELS) as Array<keyof typeof MODELS>).map(
+                (key) => (
+                  <div key={key} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={key}
+                      checked={selectedModels[key]}
+                      onCheckedChange={() => handleModelChange(key)}
+                    />
+                    <label htmlFor={key}>{MODELS[key]}</label>
+                  </div>
+                )
+              )}
+            </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {(Object.keys(MODELS) as Array<keyof typeof MODELS>).map((key) => (
-              <div key={key} className="flex items-center space-x-2">
-                <Checkbox
-                  id={key}
-                  checked={selectedModels[key]}
-                  onCheckedChange={() => handleModelChange(key)}
-                />
-                <label htmlFor={key}>{MODELS[key]}</label>
-              </div>
-            ))}
+            <Button onClick={handleSubmit} disabled={isLoading}>
+              {isLoading ? "Generating..." : "Generate Images"}
+            </Button>
+
+            <ImageSection images={images} loading={isLoading} />
           </div>
-
-          <Button onClick={handleSubmit} disabled={isLoading}>
-            {isLoading ? "Generating..." : "Generate Images"}
-          </Button>
-
-          <ImageSection images={images} loading={isLoading} />
-        </div>
-      </main>
-    </div>
+        </main>
+      </div>
+    </>
   );
 }

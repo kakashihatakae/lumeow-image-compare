@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 // import { GoogleGenerativeAI } from "@google/generative-ai";
 import { GoogleGenAI } from "@google/genai";
 import OpenAI from "openai";
+import { MODELS } from "@src/lib/contstants";
+import { APIOutputType } from "@src/lib/types";
 
 // const googleAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY!);
 const ai = new GoogleGenAI({ apiKey: process.env.GOOGLE_API_KEY });
@@ -19,16 +21,16 @@ interface ImagePrompt {
 export async function POST(request: Request) {
   try {
     const body: ImagePrompt = await request.json();
-    const images: string[] = [];
+    const images: APIOutputType[] = [];
 
     if (body.selectedModels.DALLE) {
       const dalleImage = await getDALLEImage(body.prompt);
-      images.push(dalleImage);
+      images.push({ image: dalleImage, model: MODELS.DALLE });
     }
 
     if (body.selectedModels.GEMINI) {
       const geminiImage = await getGeminiImage(body.prompt);
-      images.push(geminiImage);
+      images.push({ image: geminiImage, model: MODELS.GEMINI });
     }
 
     return NextResponse.json({ status: "success", images });
