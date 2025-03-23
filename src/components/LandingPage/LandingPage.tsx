@@ -100,7 +100,7 @@ const LandingPage = () => {
         <div className="container mx-auto px-4">
           <div className="flex justify-center space-x-6">
             <a
-              href="https://twitter.com/lumeosai"
+              href="https://x.com/BhujbalShr10396"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-500 hover:text-blue-600 transition-colors"
@@ -109,7 +109,7 @@ const LandingPage = () => {
               <span className="sr-only">Twitter</span>
             </a>
             <a
-              href="https://linkedin.com/company/lumeosai"
+              href="https://www.linkedin.com/in/shreyas-bhujbal/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-500 hover:text-blue-600 transition-colors"
